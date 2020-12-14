@@ -348,3 +348,122 @@ image(year,xmasx,yeary,xmasw,xmash);
 }
   
 }
+
+function touchStarted(){
+  //DOWNLOAD
+   if(dist(img2x,img2y,mouseX,mouseY)<space){
+var sidespace = cw/20;
+var savex=cx-cw/2-sidespace/2;
+var savey = 0;
+var savew=cw+sidespace;
+var saveh=height;
+let pic = get(savex,savey,savew,saveh);
+  pic.save('MerryXmasFromTheBinders.png');
+  noLoop();
+  }else{
+    loop();
+  }
+
+if(mouseX>cx-cw/2 && mouseX<cx+cw/2 && mouseY>cy-ch/2 && mouseY<cy+ch/2){
+//ROUND ORNAMENT
+  if (mode===1){
+  push();
+ noStroke();
+for(let i = 0; i<size ; i++){
+  fill(hue,100-i,60+i);
+  ellipse(mouseX,mouseY,size-i,size-i);
+  }
+ pop();
+    }
+//LIGHT 
+  if(mode===2){
+  for(let l=0; l<size; l++){
+  var glow=l/size*60;
+    fill(hue,100,bright,glow-l);
+    ellipse(mouseX,mouseY,size-l,size-l);
+      }
+  bulb = constrain(size/5,3,50);
+  fill(hue,bulbsat,100);
+  ellipse(mouseX,mouseY,bulb,bulb);
+    }
+    
+//STAR
+if(mode===3){
+  push();
+var hue2 = hue;
+var x = mouseX;
+var y = mouseY;
+var starsize = constrain(cw/8, 30,100);
+var alphas = 100;
+for(s = 0; s<15; s++){
+    tint(hue2,100,100,alphas);
+    image(star,x,y,starsize,starsize);
+    x=x+2;
+    y=y+3;
+    starsize = constrain(starsize-5, 10,100);
+    alphas = alphas-10;
+    hue2=hue2+10;
+    }
+   pop();
+  }
+  }
+
+//START OVER
+if(dist(mouseX,mouseY,img3x,img2y)<space/2){
+  createCanvas(windowWidth,windowHeight);
+
+background(0);
+ 
+slideheight = height/3.5;
+slidelength = width/5;
+slidestart = width/20+10;
+
+
+panelstartX = slidestart+slidelength/2;
+panelstartY = slideheight+height/6;
+panellength = slidelength+2*(width/20);
+panelheight = height/2;
+
+cx = width * 0.6;
+cy = height/2;
+ch = height*0.8;
+cw = constrain(ch*1.33,0,width-(panelstartX+panellength));
+
+colorMode(HSB,360,100,100,100);
+
+var base = cw;
+//treesize=30;
+treesize=constrain(cw/20,20,30);
+var branches = 10;
+var treehue=110;
+for(let b=0; b<branches; b++){
+  var treespace = (ch/branches)*0.95;
+  var treeY = (height-ch+treespace)/2 + treespace*b;
+  var wide = (cw/12)*b;
+  var start = cx-wide/2;
+  treehue=treehue+4;
+    for(let ll=0; ll<treesize; ll++){
+    alpha=11/2;
+     stroke(treehue,85,80,alpha);
+     strokeWeight(ll);
+     line(start,treeY,start+wide,treeY);
+        }   
+  }
+  
+rectMode(CENTER);
+noFill();
+stroke(100);
+strokeWeight(4);
+//frame
+rect(cx,cy,cw,ch,10);
+//MERRY
+imageMode(CENTER);
+var xmasw = panellength*2;
+var xmash = xmasw/10.6666;
+var xmasx = cx;
+var xmasy = xmash/2-(xmash*0.2);
+var yeary = height-xmash/2;
+image(xmas,xmasx,xmasy,xmasw,xmash);
+image(year,xmasx,yeary,xmasw,xmash);
+    }
+}
